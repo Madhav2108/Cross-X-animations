@@ -486,3 +486,108 @@ function crossAppearAnimation_3() {
 		openMenuAnimation_3();
 	}
 }
+
+
+///Combined Open Menu Animation
+function openMenuAnimation_3() {
+	if ( !menuDisappearComplete_3 ) { 
+		menuDisappearAnimation_3();
+	} else if ( !crossAppearComplete_3) {
+		crossAppearAnimation_3();
+	}
+}
+
+///Cross Disappear
+function crossDisappearAnimation_3() {
+	currentFrame_3++;
+	if ( currentFrame_3 <= crossDisappearDurationInFrames_3 ) {
+		window.requestAnimationFrame( ()=> { 
+      var rotation = Math.PI*0.75;
+			//top line
+      var tlAng = AJS.easeInBack( Math.PI*1.75, Math.PI*1.75+rotation, crossDisappearDurationInFrames_3, currentFrame_3 );
+      var trAng = AJS.easeInBack( Math.PI*0.75, Math.PI*0.75+rotation, crossDisappearDurationInFrames_3, currentFrame_3 );
+      positionRotation( cPt_3, tlPt_3, tlAng );
+      positionRotation( cPt_3, trPt_3, trAng );
+      topLine_3.setAttribute( "d", "M"+tlPt_3.x+","+tlPt_3.y+" L"+trPt_3.x+","+trPt_3.y+" Z" );
+			//center line
+      var mlAng = AJS.easeInBack( Math.PI*2.25, Math.PI*2.25+rotation, crossDisappearDurationInFrames_3, currentFrame_3 );
+      var mrAng = AJS.easeInBack( Math.PI*1.25, Math.PI*1.25+rotation, crossDisappearDurationInFrames_3, currentFrame_3 );
+      positionRotation( cPt_3, mlPt_3, mlAng );
+      positionRotation( cPt_3, mrPt_3, mrAng );
+      middleLine_3.setAttribute( "d", "M"+mlPt_3.x+","+mlPt_3.y+" L"+mrPt_3.x+","+mrPt_3.y+" Z" );
+      //bottom line
+      bottomLine_3.style.opacity = 0;
+			//recursion
+			crossDisappearAnimation_3();
+		});
+	} else {
+		middleLine_3.style.opacity = "1";
+		currentFrame_3 = 0;
+		crossDisappearComplete_3 = true;
+		closeMenuAnimation_3();
+	}
+}
+
+///Menu Appear
+function menuAppearAnimation_3() {
+	currentFrame_3++;
+	if ( currentFrame_3 <= menuAppearDurationInFrames_3 ) {
+    tlPt_3 = { x: 37, y: 70 };
+    trPt_3 = { x: 37, y: 30 };
+    mlPt_3 = { x: 50, y: 70 };
+    mrPt_3 = { x: 50, y: 30 };
+    bottomLine_3.style.opacity = 1;
+		window.requestAnimationFrame( ()=> {  
+      var rotation = Math.PI*0.5;
+			//top line
+			var tlAng = AJS.easeOutBack( 2.1471, 2.1471+rotation, menuDisappearDurationInFrames_3, currentFrame_3 );
+			var trAng = AJS.easeOutBack( 4.1360, 4.1360+rotation, menuDisappearDurationInFrames_3, currentFrame_3 );
+			positionRotation( cPt_3, tlPt_3, tlAng );
+			positionRotation( cPt_3, trPt_3, trAng );
+			topLine_3.setAttribute( "d", "M"+tlPt_3.x+","+tlPt_3.y+" L"+trPt_3.x+","+trPt_3.y+" Z" );
+      //middle line
+      var mlAng = AJS.easeOutBack( Math.PI*0.5, Math.PI*0.5+rotation, menuDisappearDurationInFrames_3, currentFrame_3 );
+      var mrAng = AJS.easeOutBack( Math.PI*1.5, Math.PI*1.5+rotation, menuDisappearDurationInFrames_3, currentFrame_3 );
+      positionRotation( cPt_3, mlPt_3, mlAng );
+      positionRotation( cPt_3, mrPt_3, mrAng );
+      middleLine_3.setAttribute( "d", "M"+mlPt_3.x+","+mlPt_3.y+" L"+mrPt_3.x+","+mrPt_3.y+" Z" );
+      //bottom line
+      var blAng = AJS.easeOutBack( 0.9944, 0.9944+rotation, menuDisappearDurationInFrames_3, currentFrame_3 );
+      var brAng = AJS.easeOutBack( 5.2887, 5.2887+rotation, menuDisappearDurationInFrames_3, currentFrame_3 );
+      positionRotation( cPt_3, blPt_3, blAng );
+      positionRotation( cPt_3, brPt_3, brAng );
+      bottomLine_3.setAttribute( "d", "M"+blPt_3.x+","+blPt_3.y+" L"+brPt_3.x+","+brPt_3.y+" Z" );
+			//recursion
+			menuAppearAnimation_3();
+		});
+	} else {
+		currentFrame_3 = 0;
+		menuAppearComplete_3 = true;
+	}
+}
+
+///Close Menu Animation
+function closeMenuAnimation_3() {
+	if ( !crossDisappearComplete_3 ) {
+		crossDisappearAnimation_3();
+	} else if ( !menuAppearComplete_3 ) {
+		menuAppearAnimation_3();
+	}
+}
+
+///Events
+icon_3.addEventListener( "click", ()=> { 
+  if ( state_3 === "menu" ) {
+  	openMenuAnimation_3();
+  	state_3 = "cross";
+  	crossDisappearComplete_3 = false;
+		menuAppearComplete_3 = false;
+  } else if ( state_3 === "cross" ) {
+  	closeMenuAnimation_3();
+  	state_3 = "menu";
+  	menuDisappearComplete_3 = false;
+		crossAppearComplete_3 = false;
+  }
+});
+
+// new 
