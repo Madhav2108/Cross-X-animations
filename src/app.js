@@ -84,3 +84,62 @@ function openMenuAnimation_1() {
 		arrowAppearAnimation_1();
 	}
 }
+
+
+///Cross Disappear
+function arrowDisappearAnimation_1() {
+	currentFrame_1++;
+	if ( currentFrame_1 <= arrowDisappearDurationInFrames_1 ) {
+		window.requestAnimationFrame( ()=> {
+			//top line
+			topLeftX_1 = AJS.easeInBack( 35, 30, arrowDisappearDurationInFrames_1, currentFrame_1 );
+			topLeftY_1 = AJS.easeInBack( 35, 50, arrowDisappearDurationInFrames_1, currentFrame_1 );
+			bottomRightX_1 = AJS.easeInBack( 65, 70, arrowDisappearDurationInFrames_1, currentFrame_1 );
+			bottomRightY_1 = AJS.easeInBack( 65, 50, arrowDisappearDurationInFrames_1, currentFrame_1 );
+			topLine_1.setAttribute( "d", "M" + topLeftX_1 + "," + topLeftY_1 + " L" + bottomRightX_1 + "," + bottomRightY_1 );
+			//bottom line
+			bottomLeftX_1 = AJS.easeInBack( 35, 30, arrowDisappearDurationInFrames_1, currentFrame_1 );
+			bottomLeftY_1 = AJS.easeInBack( 65, 50, arrowDisappearDurationInFrames_1, currentFrame_1 );
+			topRightX_1 = AJS.easeInBack( 65, 70, arrowDisappearDurationInFrames_1, currentFrame_1 );
+			topRightY_1 = AJS.easeInBack( 35, 50, arrowDisappearDurationInFrames_1, currentFrame_1 );
+			bottomLine_1.setAttribute( "d", "M" + bottomLeftX_1 + "," + bottomLeftY_1 + " L" + topRightX_1 + "," + topRightY_1 );
+			//recursion
+			arrowDisappearAnimation_1();
+		});
+	} else {
+		middleLine_1.style.opacity = "1";
+		currentFrame_1 = 1;
+		arrowDisappearComplete_1 = true;
+		closeMenuAnimation_1();
+	}
+}
+
+///Menu Appear
+function menuAppearAnimation_1() {
+	currentFrame_1++;
+	if ( currentFrame_1 <= menuAppearDurationInFrames_1 ) {
+		window.requestAnimationFrame( ()=> {
+			//top line
+			topLineY_1 = AJS.easeOutBack( 50, 37, menuDisappearDurationInFrames_1, currentFrame_1 );
+			topLine_1.setAttribute( "d", "M30,"+topLineY_1+" L70,"+topLineY_1 );
+			//bottom line
+			bottomLineY_1 = AJS.easeOutBack( 50, 63, menuDisappearDurationInFrames_1, currentFrame_1 );
+			bottomLine_1.setAttribute( "d", "M30,"+bottomLineY_1+" L70,"+bottomLineY_1 );
+			//recursion
+			menuAppearAnimation_1();
+		});
+	} else {
+		currentFrame_1 = 1;
+		menuAppearComplete_1 = true;
+		closeMenuAnimation_1();
+	}
+}
+
+///Close Menu Animation
+function closeMenuAnimation_1() {
+	if ( !arrowDisappearComplete_1 ) {
+		arrowDisappearAnimation_1();
+	} else if ( !menuAppearComplete_1 ) {
+		menuAppearAnimation_1();
+	}
+}
