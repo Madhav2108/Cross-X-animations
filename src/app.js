@@ -418,3 +418,71 @@ function positionRotation( centerPoint, orbitPoint, angleInRads ) {
     orbitPoint.x = centerPoint.x + Math.cos( angleInRads ) * distance;
     orbitPoint.y = centerPoint.y + Math.sin( angleInRads ) * distance;
   }
+
+
+  function menuDisappearAnimation_3() {
+	currentFrame_3++;
+	if ( currentFrame_3 <= menuDisappearDurationInFrames_3 ) {
+		window.requestAnimationFrame( ()=> { 
+      var rotation = Math.PI*0.5;
+			//top line
+      var tlAng = AJS.easeInBack( 3.7179, 3.7179+rotation, menuDisappearDurationInFrames_3, currentFrame_3 );
+      var trAng = AJS.easeInBack( 5.7068, 5.7068+rotation, menuDisappearDurationInFrames_3, currentFrame_3 );
+      positionRotation( cPt_3, tlPt_3, tlAng );
+      positionRotation( cPt_3, trPt_3, trAng );
+      topLine_3.setAttribute( "d", "M"+tlPt_3.x+","+tlPt_3.y+" L"+trPt_3.x+","+trPt_3.y+" Z" );
+      //middle line
+      var mlAng = AJS.easeInBack( Math.PI, Math.PI+rotation, menuDisappearDurationInFrames_3, currentFrame_3 );
+      var mrAng = AJS.easeInBack( 0, rotation, menuDisappearDurationInFrames_3, currentFrame_3 );
+      positionRotation( cPt_3, mlPt_3, mlAng );
+      positionRotation( cPt_3, mrPt_3, mrAng );
+      middleLine_3.setAttribute( "d", "M"+mlPt_3.x+","+mlPt_3.y+" L"+mrPt_3.x+","+mrPt_3.y+" Z" );
+      //bottom line
+      var blAng = AJS.easeInBack( 2.5652, 2.5652+rotation, menuDisappearDurationInFrames_3, currentFrame_3 );
+      var brAng = AJS.easeInBack( 0.5763, 0.5763+rotation, menuDisappearDurationInFrames_3, currentFrame_3 );
+      positionRotation( cPt_3, blPt_3, blAng );
+      positionRotation( cPt_3, brPt_3, brAng );
+      bottomLine_3.setAttribute( "d", "M"+blPt_3.x+","+blPt_3.y+" L"+brPt_3.x+","+brPt_3.y+" Z" );
+			//recursion
+			menuDisappearAnimation_3();
+		});
+	} else {
+		currentFrame_3 = 0;
+		menuDisappearComplete_3 = true;
+		openMenuAnimation_3();
+	}
+}
+
+///Cross Appear
+function crossAppearAnimation_3() {
+	currentFrame_3++;
+	if ( currentFrame_3 <= crossAppearDurationInFrames_3 ) {
+    tlPt_3 = { x: 50, y: 28.7867 };
+    trPt_3 = { x: 50, y: 71.2132 };
+    mlPt_3 = { x: 28.7867, y: 50 };
+    mrPt_3 = { x: 71.2132, y: 50 };
+		window.requestAnimationFrame( ()=> { 
+      var rotation = Math.PI*0.75;
+			//top line
+      var tlAng = AJS.easeOutBack( Math.PI, Math.PI+rotation, crossAppearDurationInFrames_3, currentFrame_3 );
+      var trAng = AJS.easeOutBack( 0, rotation, crossAppearDurationInFrames_3, currentFrame_3 );
+      positionRotation( cPt_3, tlPt_3, tlAng );
+      positionRotation( cPt_3, trPt_3, trAng );
+      topLine_3.setAttribute( "d", "M"+tlPt_3.x+","+tlPt_3.y+" L"+trPt_3.x+","+trPt_3.y+" Z" );
+			//center line
+      var mlAng = AJS.easeOutBack( Math.PI*1.5, Math.PI*1.5+rotation, crossAppearDurationInFrames_3, currentFrame_3 );
+      var mrAng = AJS.easeOutBack( Math.PI*0.5, Math.PI*0.5+rotation, crossAppearDurationInFrames_3, currentFrame_3 );
+      positionRotation( cPt_3, mlPt_3, mlAng );
+      positionRotation( cPt_3, mrPt_3, mrAng );
+      middleLine_3.setAttribute( "d", "M"+mlPt_3.x+","+mlPt_3.y+" L"+mrPt_3.x+","+mrPt_3.y+" Z" );
+      //bottom line
+      bottomLine_3.style.opacity = 0;
+			//recursion
+			crossAppearAnimation_3();
+		});
+	} else {
+		currentFrame_3 = 0;
+		crossAppearComplete_3 = true;
+		openMenuAnimation_3();
+	}
+}
