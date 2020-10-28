@@ -412,3 +412,9 @@ var brPt_3 = { x: 70, y: 63 };
 var topLineOpacity_3 = 1;
 var middleLineOpacity_3 = 1;
 var bottomLineOpacity_3 = 1;
+
+function positionRotation( centerPoint, orbitPoint, angleInRads ) {
+    var distance = Math.sqrt( Math.pow( orbitPoint.x-centerPoint.x, 2 ) + Math.pow( orbitPoint.y-centerPoint.y, 2 ) );
+    orbitPoint.x = centerPoint.x + Math.cos( angleInRads ) * distance;
+    orbitPoint.y = centerPoint.y + Math.sin( angleInRads ) * distance;
+  }
