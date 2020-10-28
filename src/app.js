@@ -370,3 +370,45 @@ icon_2.addEventListener( "click", ()=> {
 		crossAppearComplete_2 = false;
   }
 });
+
+// new 
+var icon_3 = document.getElementById("b3");
+var topLine_3 = document.getElementById("top-line-3");
+var middleLine_3 = document.getElementById("middle-line-3");
+var bottomLine_3 = document.getElementById("bottom-line-3");
+var state_3 = "menu"; 
+var topLineY_3;
+var middleLineY_3;
+var bottomLineY_3;
+var topLeftX_3;
+var topRightX_3;
+var middleLeftX_3;
+var middleRightX_3;
+var bottomLeftX_3;
+var bottomRightX_3;
+var topLeftY_3;
+var topRightY_3;
+var middleLeftY_3;
+var middleRightY_3;
+var bottomLeftY_3;
+var bottomRightY_3;
+var segmentDuration_3 = 20;
+var menuDisappearDurationInFrames_3 = segmentDuration_3;
+var crossAppearDurationInFrames_3 = segmentDuration_3*1.5;
+var crossDisappearDurationInFrames_3 = segmentDuration_3*1.5;
+var menuAppearDurationInFrames_3 = segmentDuration_3;
+var menuDisappearComplete_3 = false;
+var crossAppearComplete_3 = false;
+var crossDisappearComplete_3 = true;
+var menuAppearComplete_3 = true;
+var currentFrame_3 = 0;
+var cPt_3 = { x: 50, y: 50 };  
+var tlPt_3 = { x: 30, y: 37 };  
+var trPt_3 = { x: 70, y: 37 };  
+var mlPt_3 = { x: 30, y: 50 };  
+var mrPt_3 = { x: 70, y: 50 };  
+var blPt_3 = { x: 30, y: 63 };  
+var brPt_3 = { x: 70, y: 63 };  
+var topLineOpacity_3 = 1;
+var middleLineOpacity_3 = 1;
+var bottomLineOpacity_3 = 1;
