@@ -825,3 +825,97 @@ function openMenuAnimation_5() {
 		arrowAppearAnimation_5();
 	}
 }
+function arrowDisappearAnimation_5() {
+	currentFrame_5++;
+	if ( currentFrame_5 <= arrowDisappearDurationInFrames_5 ) {
+		window.requestAnimationFrame( ()=> {
+      //top line
+			topLeftX_5 = AJS.easeInQuad( 50, 110, arrowAppearDurationInFrames_5, currentFrame_5 );
+			topLeftY_5 = AJS.easeInQuad( 40, 100, arrowAppearDurationInFrames_5, currentFrame_5 );
+			bottomRightX_5 = AJS.easeInQuad( 70, 130, arrowAppearDurationInFrames_5, currentFrame_5 );
+			bottomRightY_5 = AJS.easeInQuad( 60, 120, arrowAppearDurationInFrames_5, currentFrame_5 );
+			topLine_5.setAttribute( "d", "M" + topLeftX_5 + "," + topLeftY_5 + " L" + bottomRightX_5 + "," + bottomRightY_5 );
+			topLineOpacity_5 = AJS.easeInExpo( 1, 0, arrowAppearDurationInFrames_5, currentFrame_5 );
+			topLine_5.style.opacity = topLineOpacity_5;
+			//bottom line
+			bottomLeftX_5 = AJS.easeInQuad( 30, -30, arrowAppearDurationInFrames_5, currentFrame_5 );
+			bottomLeftY_5 = AJS.easeInQuad( 60, 120, arrowAppearDurationInFrames_5, currentFrame_5 );
+			topRightX_5 = AJS.easeInQuad( 50, -10, arrowAppearDurationInFrames_5, currentFrame_5 );
+			topRightY_5 = AJS.easeInQuad( 40, 100, arrowAppearDurationInFrames_5, currentFrame_5 );
+			bottomLine_5.setAttribute( "d", "M" + bottomLeftX_5 + "," + bottomLeftY_5 + " L" + topRightX_5 + "," + topRightY_5 );
+      bottomLineOpacity_5 = AJS.easeInExpo( 1, 0, arrowAppearDurationInFrames_5, currentFrame_5 );
+      bottomLine_5.style.opacity = bottomLineOpacity_5; 
+			//recursion
+			arrowDisappearAnimation_5();
+		});
+	} else {
+		middleLine_5.style.opacity = "1";
+		currentFrame_5 = 0;
+		arrowDisappearComplete_5 = true;
+		closeMenuAnimation_5();
+	}
+}
+
+///Menu Appear
+function menuAppearAnimation_5() {
+	currentFrame_5++;
+	if ( currentFrame_5 <= menuAppearDurationInFrames_5 ) {
+		window.requestAnimationFrame( ()=> {  
+			//top line
+      if ( currentFrame_5 <= lineAppearDurationInFrames_5 ) {
+        topLeftX_5 = AJS.easeOutBack( 130, 30, lineAppearDurationInFrames_5, currentFrame_5 );
+        topRightX_5 = AJS.easeOutBack( 170, 70, lineAppearDurationInFrames_5, currentFrame_5 );
+        topLine_5.setAttribute( "d", "M"+topLeftX_5+",37 L"+topRightX_5+",37 Z" );
+        topLineOpacity_5 = AJS.linear( -2, 1, lineAppearDurationInFrames_5, currentFrame_5 );
+        topLine_5.style.opacity = topLineOpacity_5;
+      }
+			//middle line
+			if ( currentFrame_5 > lineAppearDelay_5 && currentFrame_5 <= lineAppearDurationInFrames_5 + lineAppearDelay_5 ) {
+        middleLeftX_5 = AJS.easeOutBack( 130, 30, lineAppearDurationInFrames_5, currentFrame_5 - lineAppearDelay_5 );
+        middleRightX_5 = AJS.easeOutBack( 170, 70, lineAppearDurationInFrames_5, currentFrame_5 - lineAppearDelay_5 );
+        middleLine_5.setAttribute( "d", "M"+middleLeftX_5+",50 L"+middleRightX_5+",50 Z" );
+        middleLineOpacity_5 = AJS.easeOutBack( -2, 1, lineAppearDurationInFrames_5, currentFrame_5 - lineAppearDelay_5 );
+        middleLine_5.style.opacity = middleLineOpacity_5;
+			}
+			//bottom line
+			if ( currentFrame_5 > lineAppearDelay_5*2 ) {
+        bottomLeftX_5 = AJS.easeOutBack( 130, 30, lineAppearDurationInFrames_5, currentFrame_5 - lineAppearDelay_5*2 );
+        bottomRightX_5 = AJS.easeOutBack( 170, 70, lineAppearDurationInFrames_5, currentFrame_5 - lineAppearDelay_5*2 );
+        bottomLine_5.setAttribute( "d", "M"+bottomLeftX_5+",63 L"+bottomRightX_5+",63 Z" );
+        bottomLineOpacity_5 = AJS.easeOutBack( -2, 1, lineAppearDurationInFrames_5, currentFrame_5 - lineAppearDelay_5*2 );
+        bottomLine_5.style.opacity = bottomLineOpacity_5;
+			}
+			//recursion
+			menuAppearAnimation_5();
+		});
+	} else {
+		currentFrame_5 = 0;
+		menuAppearComplete_5 = true;
+	}
+}
+
+///Close Menu Animation
+function closeMenuAnimation_5() {
+	if ( !arrowDisappearComplete_5 ) {
+		arrowDisappearAnimation_5();
+	} else if ( !menuAppearComplete_5 ) {
+		menuAppearAnimation_5();
+	}
+}
+
+///Events
+icon_5.addEventListener( "click", ()=> { 
+  if ( state_5 === "menu" ) {
+  	openMenuAnimation_5();
+  	state_5 = "arrow";
+  	arrowDisappearComplete_5 = false;
+		menuAppearComplete_5 = false;
+  } else if ( state_5 === "arrow" ) {
+  	closeMenuAnimation_5();
+  	state_5 = "menu";
+  	menuDisappearComplete_5 = false;
+		arrowAppearComplete_5 = false;
+  }
+});
+
+//  new 
