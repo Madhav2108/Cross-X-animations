@@ -694,3 +694,96 @@ function menuAppearAnimation_4() {
 		menuAppearComplete_4 = true;
 	}
 }
+
+function closeMenuAnimation_4() {
+	if ( !menuAppearComplete_4 ) {
+		menuAppearAnimation_4();
+	}
+}
+
+///Events
+icon_4.addEventListener( "click", ()=> {
+  if ( state_4 === "menu" ) {
+  	openMenuAnimation_4();
+  	state_4 = "arrow"
+  } else if ( state_4 === "arrow" ) {
+  	closeMenuAnimation_4();
+  	state_4 = "menu"
+  }
+});
+
+// new
+var icon_5 = document.getElementById("b5");
+var topLine_5 = document.getElementById("top-line-5");
+var middleLine_5 = document.getElementById("middle-line-5");
+var bottomLine_5 = document.getElementById("bottom-line-5");
+var state_5 = "menu";
+var topLineY_5;
+var middleLineY_5;
+var bottomLineY_5;
+var topLeftY_5;
+var topRightY_5;
+var bottomLeftY_5;
+var bottomRightY_5;
+var topLeftX_5;
+var topRightX_5;
+var middleLeftX_5;
+var middleRightX_5;
+var bottomLeftX_5;
+var bottomRightX_5;
+var segmentDuration_5 = 25;
+var menuDisappearDurationInFrames_5 = segmentDuration_5;
+var arrowAppearDurationInFrames_5 = Math.round( segmentDuration_5*0.35 );
+var arrowDisappearDurationInFrames_5 = Math.round( segmentDuration_5*0.35 );
+var menuAppearDurationInFrames_5 = segmentDuration_5;
+var menuDisappearComplete_5 = false;
+var arrowAppearComplete_5 = false;
+var arrowDisappearComplete_5 = true;
+var menuAppearComplete_5 = true;
+var currentFrame_5 = 0;
+var lineDisappearDelay_5 = segmentDuration_5*0.2;
+var lineAppearDelay_5 = lineDisappearDelay_5;
+var lineDisappearDurationInFrames_5 = segmentDuration_5 - lineDisappearDelay_5*2;
+var lineAppearDurationInFrames_5 = lineDisappearDurationInFrames_5;
+var topLineOpacity_5 = 1;
+var middleLineOpacity_5 = 1;
+var bottomLineOpacity_5 = 1;
+
+///Menu Disappear
+function menuDisappearAnimation_5() {
+	currentFrame_5++;
+	if ( currentFrame_5 <= menuDisappearDurationInFrames_5 ) {
+		window.requestAnimationFrame( ()=> { 
+			//top line
+      if ( currentFrame_5 <= lineDisappearDurationInFrames_5 ) {
+        topLeftX_5 = AJS.easeInBack( 30, 130, lineDisappearDurationInFrames_5, currentFrame_5 );
+        topRightX_5 = AJS.easeInBack( 70, 170, lineDisappearDurationInFrames_5, currentFrame_5 );
+        topLine_5.setAttribute( "d", "M"+topLeftX_5+",37 L"+topRightX_5+",37 Z" );
+        topLineOpacity_5 = AJS.linear( 1, 0, lineDisappearDurationInFrames_5*0.85, currentFrame_5 );
+        topLine_5.style.opacity = topLineOpacity_5;
+      }
+      //middle line
+      if ( currentFrame_5 > lineDisappearDelay_5 && currentFrame_5 <= lineDisappearDurationInFrames_5 + lineDisappearDelay_5 ) {
+        middleLeftX_5 = AJS.easeInBack( 30, 130, lineDisappearDurationInFrames_5, currentFrame_5 - lineDisappearDelay_5 );
+        middleRightX_5 = AJS.easeInBack( 70, 170, lineDisappearDurationInFrames_5, currentFrame_5 - lineDisappearDelay_5 );
+        middleLine_5.setAttribute( "d", "M"+middleLeftX_5+",50 L"+middleRightX_5+",50 Z" );
+        middleLineOpacity_5 = AJS.linear( 1, 0, lineDisappearDurationInFrames_5*0.85, currentFrame_5 - lineDisappearDelay_5 );
+        middleLine_5.style.opacity = middleLineOpacity_5;
+      }
+      //bottom line
+      if ( currentFrame_5 > lineDisappearDelay_5*2 ) {
+        bottomLeftX_5 = AJS.easeInBack( 30, 130, lineDisappearDurationInFrames_5, currentFrame_5 - lineDisappearDelay_5*2 );
+        bottomRightX_5 = AJS.easeInBack( 70, 170, lineDisappearDurationInFrames_5, currentFrame_5 - lineDisappearDelay_5*2 );
+        bottomLine_5.setAttribute( "d", "M"+bottomLeftX_5+",63 L"+bottomRightX_5+",63 Z" );
+        bottomLineOpacity_5 = AJS.linear( 1, 0, lineDisappearDurationInFrames_5*0.85, currentFrame_5 - lineDisappearDelay_5*2 );
+        bottomLine_5.style.opacity = bottomLineOpacity_5;
+      }
+			//recursion
+			menuDisappearAnimation_5();
+		});
+	} else {
+		currentFrame_5 = 0;
+		menuDisappearComplete_5 = true;
+		openMenuAnimation_5();
+	}
+}
