@@ -919,3 +919,79 @@ icon_5.addEventListener( "click", ()=> {
 });
 
 //  new 
+var icon_6 = document.getElementById("b6");
+var topLine_6 = document.getElementById("top-line-6");
+var middleLine_6 = document.getElementById("middle-line-6");
+var bottomLine_6 = document.getElementById("bottom-line-6");
+var state_6 = "menu";  
+var topLineY_6;
+var middleLineY_6;
+var bottomLineY_6;
+var topLeftX_6;
+var topRightX_6;
+var middleLeftX_6;
+var middleRightX_6;
+var bottomLeftX_6;
+var bottomRightX_6;
+var topLeftY_6;
+var topRightY_6;
+var middleLeftY_6;
+var middleRightY_6;
+var bottomLeftY_6;
+var bottomRightY_6;
+var segmentDuration_6 = 20;
+var menuDisappearDurationInFrames_6 = segmentDuration_6;
+var arrowAppearDurationInFrames_6 = segmentDuration_6;
+var arrowDisappearDurationInFrames_6 = segmentDuration_6;
+var menuAppearDurationInFrames_6 = segmentDuration_6;
+var menuDisappearComplete_6 = false;
+var arrowAppearComplete_6 = false;
+var arrowDisappearComplete_6 = true;
+var menuAppearComplete_6 = true;
+var currentFrame_6 = 0;
+var cPt_6 = { x: 50, y: 50 };  
+var tlPt_6 = { x: 30, y: 37 };  
+var trPt_6 = { x: 70, y: 37 };  
+var mlPt_6 = { x: 30, y: 50 };  
+var mrPt_6 = { x: 70, y: 50 };  
+var blPt_6 = { x: 30, y: 63 }; 
+var brPt_6 = { x: 70, y: 63 };  
+
+function positionRotation( centerPoint, orbitPoint, angleInRads ) {
+	var distance = Math.sqrt( Math.pow( orbitPoint.x-centerPoint.x, 2 ) + Math.pow( orbitPoint.y-centerPoint.y, 2 ) );
+	orbitPoint.x = centerPoint.x + Math.cos( angleInRads ) * distance;
+	orbitPoint.y = centerPoint.y + Math.sin( angleInRads ) * distance;
+  }
+
+  function menuDisappearAnimation_6() {
+	currentFrame_6++;
+	if ( currentFrame_6 <= menuDisappearDurationInFrames_6 ) {
+		window.requestAnimationFrame( ()=> { 
+      var rotation = Math.PI*0.5;  // menu disappear rotation
+			//top line
+      var tlAng = AJS.easeInBack( 3.7179, 3.7179+rotation, menuDisappearDurationInFrames_6, currentFrame_6 );
+      var trAng = AJS.easeInBack( 5.7068, 5.7068+rotation, menuDisappearDurationInFrames_6, currentFrame_6 );
+      positionRotation( cPt_6, tlPt_6, tlAng );
+      positionRotation( cPt_6, trPt_6, trAng );
+      topLine_6.setAttribute( "d", "M"+tlPt_6.x+","+tlPt_6.y+" L"+trPt_6.x+","+trPt_6.y+" Z" );
+      //middle line
+      var mlAng = AJS.easeInBack( Math.PI, Math.PI+rotation, menuDisappearDurationInFrames_6, currentFrame_6 );
+      var mrAng = AJS.easeInBack( 0, rotation, menuDisappearDurationInFrames_6, currentFrame_6 );
+      positionRotation( cPt_6, mlPt_6, mlAng );
+      positionRotation( cPt_6, mrPt_6, mrAng );
+      middleLine_6.setAttribute( "d", "M"+mlPt_6.x+","+mlPt_6.y+" L"+mrPt_6.x+","+mrPt_6.y+" Z" );
+      //bottom line
+      var blAng = AJS.easeInBack( 2.5652, 2.5652+rotation, menuDisappearDurationInFrames_6, currentFrame_6 );
+      var brAng = AJS.easeInBack( 0.5763, 0.5763+rotation, menuDisappearDurationInFrames_6, currentFrame_6 );
+      positionRotation( cPt_6, blPt_6, blAng );
+      positionRotation( cPt_6, brPt_6, brAng );
+      bottomLine_6.setAttribute( "d", "M"+blPt_6.x+","+blPt_6.y+" L"+brPt_6.x+","+brPt_6.y+" Z" );
+			//recursion
+			menuDisappearAnimation_6();
+		});
+	} else {
+		currentFrame_6 = 0;
+		menuDisappearComplete_6 = true;
+		openMenuAnimation_6();
+	}
+}
