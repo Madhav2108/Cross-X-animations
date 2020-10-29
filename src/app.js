@@ -591,3 +591,23 @@ icon_3.addEventListener( "click", ()=> {
 });
 
 // new 
+var icon_4 = document.getElementById("b4");
+var topLine_4 = document.getElementById("top-line-4");
+var middleLine_4 = document.getElementById("middle-line-4");
+var bottomLine_4 = document.getElementById("bottom-line-4");
+var state_4 = "menu";  
+var topLineY_4;
+var middleLineY_4;
+var bottomLineY_4;
+var arrowLegY_4;
+var arrowPointY_4;
+var hideawayLinesOpacity_4;
+var segmentDuration_4 = 25;
+var menuDisappearDurationInFrames_4 = segmentDuration_4;
+var arrowAppearDurationInFrames_4 = segmentDuration_4;
+var menuAppearDurationInFrames_4 = segmentDuration_4*1.5;
+var fadeInDurationInFrames_4 = segmentDuration_4;
+var menuDisappearComplete_4 = false;
+var arrowAppearComplete_4 = false;
+var menuAppearComplete_4 = true;
+var currentFrame_4 = 1;
