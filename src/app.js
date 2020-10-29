@@ -995,3 +995,163 @@ function positionRotation( centerPoint, orbitPoint, angleInRads ) {
 		openMenuAnimation_6();
 	}
 }
+
+
+function arrowAppearAnimation_6() {
+	currentFrame_6++;
+	if ( currentFrame_6 <= arrowAppearDurationInFrames_6 ) {
+    tlPt_6 = { x: 60, y: 30 };
+    trPt_6 = { x: 40, y: 50 };
+    mlPt_6 = { x: 40, y: 50 };
+    mrPt_6 = { x: 60, y: 70 };
+		window.requestAnimationFrame( ()=> { 
+      var rotation = Math.PI*0.5;  // arrow appear rotation
+			//top line
+      var tlAng = AJS.easeOutBack( 5.1759, 5.1759+rotation, arrowAppearDurationInFrames_6, currentFrame_6 );
+      var trAng = AJS.easeOutBack( Math.PI, Math.PI+rotation, arrowAppearDurationInFrames_6, currentFrame_6 );
+      positionRotation( cPt_6, tlPt_6, tlAng );
+      positionRotation( cPt_6, trPt_6, trAng );
+      topLine_6.setAttribute( "d", "M"+tlPt_6.x+","+tlPt_6.y+" L"+trPt_6.x+","+trPt_6.y+" Z" );
+			//center line
+      var mlAng = AJS.easeOutBack( Math.PI, Math.PI+rotation, arrowAppearDurationInFrames_6, currentFrame_6 );
+      var mrAng = AJS.easeOutBack( 1.1072, 1.1072+rotation, arrowAppearDurationInFrames_6, currentFrame_6 );
+      positionRotation( cPt_6, mlPt_6, mlAng );
+      positionRotation( cPt_6, mrPt_6, mrAng );
+      middleLine_6.setAttribute( "d", "M"+mlPt_6.x+","+mlPt_6.y+" L"+mrPt_6.x+","+mrPt_6.y+" Z" );
+      //bottom line
+      bottomLine_6.style.opacity = 0;
+			//recursion
+			arrowAppearAnimation_6();
+		});
+	} else {
+		currentFrame_6 = 0;
+		arrowAppearComplete_6 = true;
+		openMenuAnimation_6();
+	}
+}
+
+///Combined Open Menu Animation
+function openMenuAnimation_6() {
+	if ( !menuDisappearComplete_6 ) { 
+		menuDisappearAnimation_6();
+	} else if ( !arrowAppearComplete_6) {
+		arrowAppearAnimation_6();
+	}
+}
+
+///Arrow Disappear
+function arrowDisappearAnimation_6() {
+	currentFrame_6++;
+	if ( currentFrame_6 <= arrowDisappearDurationInFrames_6 ) {
+		window.requestAnimationFrame( ()=> { 
+      var rotation = Math.PI*0.5;  // arrow disapear rotation
+			//top line
+      var tlAng = AJS.easeInBack( 0.4635, 0.4635+rotation, arrowDisappearDurationInFrames_6, currentFrame_6 );
+      var trAng = AJS.easeInBack( Math.PI*1.5, Math.PI*1.5+rotation, arrowDisappearDurationInFrames_6, currentFrame_6 );
+      positionRotation( cPt_6, tlPt_6, tlAng );
+      positionRotation( cPt_6, trPt_6, trAng );
+      topLine_6.setAttribute( "d", "M"+tlPt_6.x+","+tlPt_6.y+" L"+trPt_6.x+","+trPt_6.y+" Z" );
+			//center line
+      var mlAng = AJS.easeInBack( Math.PI*1.5, Math.PI*1.5+rotation, arrowDisappearDurationInFrames_6, currentFrame_6 );
+      var mrAng = AJS.easeInBack( 2.6779, 2.6779+rotation, arrowDisappearDurationInFrames_6, currentFrame_6 );
+      positionRotation( cPt_6, mlPt_6, mlAng );
+      positionRotation( cPt_6, mrPt_6, mrAng );
+      middleLine_6.setAttribute( "d", "M"+mlPt_6.x+","+mlPt_6.y+" L"+mrPt_6.x+","+mrPt_6.y+" Z" );
+      //bottom line
+      bottomLine_6.style.opacity = 0;
+			//recursion
+			arrowDisappearAnimation_6();
+		});
+	} else {
+		middleLine_6.style.opacity = "1";
+		currentFrame_6 = 0;
+		arrowDisappearComplete_6 = true;
+		closeMenuAnimation_6();
+	}
+}
+
+///Menu Appear
+function menuAppearAnimation_6() {
+	currentFrame_6++;
+	if ( currentFrame_6 <= menuAppearDurationInFrames_6 ) {
+    tlPt_6 = { x: 37, y: 70 };
+    trPt_6 = { x: 37, y: 30 };
+    mlPt_6 = { x: 50, y: 70 };
+    mrPt_6 = { x: 50, y: 30 };
+    bottomLine_6.style.opacity = 1;
+		window.requestAnimationFrame( ()=> {  
+      var rotation = Math.PI*0.5;  // menu appear rotation
+			//top line
+			var tlAng = AJS.easeOutBack( 2.1471, 2.1471+rotation, menuDisappearDurationInFrames_6, currentFrame_6 );
+			var trAng = AJS.easeOutBack( 4.1360, 4.1360+rotation, menuDisappearDurationInFrames_6, currentFrame_6 );
+			positionRotation( cPt_6, tlPt_6, tlAng );
+			positionRotation( cPt_6, trPt_6, trAng );
+			topLine_6.setAttribute( "d", "M"+tlPt_6.x+","+tlPt_6.y+" L"+trPt_6.x+","+trPt_6.y+" Z" );
+      //middle line
+      var mlAng = AJS.easeOutBack( Math.PI*0.5, Math.PI*0.5+rotation, menuDisappearDurationInFrames_6, currentFrame_6 );
+      var mrAng = AJS.easeOutBack( Math.PI*1.5, Math.PI*1.5+rotation, menuDisappearDurationInFrames_6, currentFrame_6 );
+      positionRotation( cPt_6, mlPt_6, mlAng );
+      positionRotation( cPt_6, mrPt_6, mrAng );
+      middleLine_6.setAttribute( "d", "M"+mlPt_6.x+","+mlPt_6.y+" L"+mrPt_6.x+","+mrPt_6.y+" Z" );
+      //bottom line
+      var blAng = AJS.easeOutBack( 0.9944, 0.9944+rotation, menuDisappearDurationInFrames_6, currentFrame_6 );
+      var brAng = AJS.easeOutBack( 5.2887, 5.2887+rotation, menuDisappearDurationInFrames_6, currentFrame_6 );
+      positionRotation( cPt_6, blPt_6, blAng );
+      positionRotation( cPt_6, brPt_6, brAng );
+      bottomLine_6.setAttribute( "d", "M"+blPt_6.x+","+blPt_6.y+" L"+brPt_6.x+","+brPt_6.y+" Z" );
+			//recursion
+			menuAppearAnimation_6();
+		});
+	} else {
+		currentFrame_6 = 0;
+		menuAppearComplete_6 = true;
+	}
+}
+
+///Close Menu Animation
+function closeMenuAnimation_6() {
+	if ( !arrowDisappearComplete_6 ) {
+		arrowDisappearAnimation_6();
+	} else if ( !menuAppearComplete_6 ) {
+		menuAppearAnimation_6();
+	}
+}
+
+///Events
+icon_6.addEventListener( "click", ()=> { 
+  if ( state_6 === "menu" ) {
+  	openMenuAnimation_6();
+  	state_6 = "arrow";
+  	arrowDisappearComplete_6 = false;
+		menuAppearComplete_6 = false;
+  } else if ( state_6 === "arrow" ) {
+  	closeMenuAnimation_6();
+  	state_6 = "menu";
+  	menuDisappearComplete_6 = false;
+		arrowAppearComplete_6 = false;
+  }
+});
+
+
+
+
+///////////////// DEMO //////////////////
+
+function playDemo() { 
+  setTimeout( function() { icon_1.click(); }, 1000 );
+  setTimeout( function() { icon_1.click(); }, 2000 );
+  setTimeout( function() { icon_2.click(); }, 3000 );
+  setTimeout( function() { icon_2.click(); }, 4000 );
+  setTimeout( function() { icon_3.click(); }, 5000 );
+  setTimeout( function() { icon_3.click(); }, 6000 );
+  setTimeout( function() { icon_4.click(); }, 7000 );
+  setTimeout( function() { icon_4.click(); }, 8000 );
+  setTimeout( function() { icon_5.click(); }, 9000 );
+  setTimeout( function() { icon_5.click(); }, 10000 );
+  setTimeout( function() { icon_6.click(); }, 11000 );
+  setTimeout( function() { icon_6.click(); playDemo(); }, 12000 );
+}
+
+document.addEventListener("DOMContentLoaded", function(event) { 
+  //playDemo();
+});
