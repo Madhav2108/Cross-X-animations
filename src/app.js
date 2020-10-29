@@ -611,3 +611,47 @@ var menuDisappearComplete_4 = false;
 var arrowAppearComplete_4 = false;
 var menuAppearComplete_4 = true;
 var currentFrame_4 = 1;
+
+function menuDisappearAnimation_4() {
+	currentFrame_4++;
+	if ( currentFrame_4 <= menuDisappearDurationInFrames_4 ) {
+		window.requestAnimationFrame( ()=> { 
+			//top line
+			topLineY_4 = AJS.easeInOutBack( 37, 63, menuDisappearDurationInFrames_4, currentFrame_4 );
+			topLine_4.setAttribute( "points", "30 "+topLineY_4+" 50 "+topLineY_4+" 70 "+topLineY_4 );
+			//middle line
+			middleLineY_4 = AJS.easeInOutBack( 50, 63, menuDisappearDurationInFrames_4, currentFrame_4 );
+			middleLine_4.setAttribute( "d", "M30,"+middleLineY_4+" L70,"+middleLineY_4 );
+			if ( middleLineY_4 >= 63) middleLine_4.style.opacity = "0";
+			//bottom line
+			if ( middleLineY_4 >= 63) bottomLine_4.style.opacity = "0";
+			//recursion
+			menuDisappearAnimation_4();
+		});
+	} else {
+		bottomLine_4.style.opacity = "0";
+		currentFrame_4 = 1;
+		menuDisappearComplete_4 = true;
+		openMenuAnimation_4();
+	}
+}
+
+///Arrow Appear
+function arrowAppearAnimation_4() {
+	currentFrame_4++;
+	if ( currentFrame_4 <= arrowAppearDurationInFrames_4 ) {
+		window.requestAnimationFrame( ()=> { 
+			//arrow
+			arrowLegY_4 = AJS.easeOutBack( 63, 60, arrowAppearDurationInFrames_4, currentFrame_4 );
+			arrowPointY_4 = AJS.easeOutBack( 63, 40, arrowAppearDurationInFrames_4, currentFrame_4 );
+			topLine_4.setAttribute("points", "30 "+arrowLegY_4+" 50 "+arrowPointY_4+" 70 "+arrowLegY_4);
+			//recursion
+			arrowAppearAnimation_4();
+		});
+	} else {
+		currentFrame_4 = 1;
+		arrowAppearComplete_4 = true;
+		menuAppearComplete_4 = false;
+		openMenuAnimation_4();
+	}
+}
