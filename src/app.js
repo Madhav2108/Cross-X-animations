@@ -655,3 +655,42 @@ function arrowAppearAnimation_4() {
 		openMenuAnimation_4();
 	}
 }
+
+
+function openMenuAnimation_4() {
+	if ( !menuDisappearComplete_4 ) { 
+		menuDisappearAnimation_4();
+	} else if ( !arrowAppearComplete_4) {
+		arrowAppearAnimation_4();
+	}
+}
+
+///Menu Return
+function menuAppearAnimation_4() {
+	currentFrame_4++;
+	if ( currentFrame_4 <= menuAppearDurationInFrames_4 ) {
+		window.requestAnimationFrame( ()=> { 
+			//arrow to top line
+			arrowLegY_4 = AJS.easeOutBounce( 60, 37, menuAppearDurationInFrames_4, currentFrame_4 );
+			arrowPointY_4 = AJS.easeOutBounce( 40, 37, menuAppearDurationInFrames_4, currentFrame_4 );
+			topLine_4.setAttribute("points", "30 "+arrowLegY_4+" 50 "+arrowPointY_4+" 70 "+arrowLegY_4);
+			//middle line
+			middleLineY_4 = AJS.easeOutBounce( 68, 50, menuAppearDurationInFrames_4, currentFrame_4 );
+			middleLine_4.setAttribute( "d", "M30,"+middleLineY_4+" L70,"+middleLineY_4 );
+			//bottom line
+			bottomLineY_4 = AJS.easeOutBounce( 68, 63, menuAppearDurationInFrames_4, currentFrame_4 );
+			bottomLine_4.setAttribute( "d", "M30,"+bottomLineY_4+" L70,"+bottomLineY_4 );
+			//middle and bottom lines opacity
+			hideawayLinesOpacity_4 = AJS.linear( 0, 1, fadeInDurationInFrames_4, currentFrame_4 );
+			middleLine_4.style.opacity = hideawayLinesOpacity_4;
+			bottomLine_4.style.opacity = hideawayLinesOpacity_4;
+			//recursion
+			menuAppearAnimation_4();
+		});
+	} else {
+		currentFrame_4 = 1;
+		menuDisappearComplete_4 = false;
+		arrowAppearComplete_4 = false;
+		menuAppearComplete_4 = true;
+	}
+}
