@@ -787,3 +787,41 @@ function menuDisappearAnimation_5() {
 		openMenuAnimation_5();
 	}
 }
+function arrowAppearAnimation_5() {
+	currentFrame_5++;
+	if ( currentFrame_5 <= arrowAppearDurationInFrames_5 ) {
+		window.requestAnimationFrame( ()=> { 
+			//top line
+			topLeftX_5 = AJS.easeInQuad( 110, 50, arrowAppearDurationInFrames_5, currentFrame_5 );
+			topLeftY_5 = AJS.easeInQuad( 100, 40, arrowAppearDurationInFrames_5, currentFrame_5 );
+			bottomRightX_5 = AJS.easeInQuad( 130, 70, arrowAppearDurationInFrames_5, currentFrame_5 );
+			bottomRightY_5 = AJS.easeInQuad( 120, 60, arrowAppearDurationInFrames_5, currentFrame_5 );
+			topLine_5.setAttribute( "d", "M" + topLeftX_5 + "," + topLeftY_5 + " L" + bottomRightX_5 + "," + bottomRightY_5 );
+			topLineOpacity_5 = AJS.easeInExpo( 0, 1, arrowAppearDurationInFrames_5, currentFrame_5 );
+			topLine_5.style.opacity = topLineOpacity_5;
+			//bottom line
+			bottomLeftX_5 = AJS.easeInQuad( -30, 30, arrowAppearDurationInFrames_5, currentFrame_5 );
+			bottomLeftY_5 = AJS.easeInQuad( 120, 60, arrowAppearDurationInFrames_5, currentFrame_5 );
+			topRightX_5 = AJS.easeInQuad( -10, 50, arrowAppearDurationInFrames_5, currentFrame_5 );
+			topRightY_5 = AJS.easeInQuad( 100, 40, arrowAppearDurationInFrames_5, currentFrame_5 );
+			bottomLine_5.setAttribute( "d", "M" + bottomLeftX_5 + "," + bottomLeftY_5 + " L" + topRightX_5 + "," + topRightY_5 );
+      bottomLineOpacity_5 = AJS.easeInExpo( 0, 1, arrowAppearDurationInFrames_5, currentFrame_5 );
+      bottomLine_5.style.opacity = bottomLineOpacity_5;      
+			//recursion
+			arrowAppearAnimation_5();
+		});
+	} else {
+		currentFrame_5 = 0;
+		arrowAppearComplete_5 = true;
+		openMenuAnimation_5();
+	}
+}
+
+///Combined Open Menu Animation
+function openMenuAnimation_5() {
+	if ( !menuDisappearComplete_5 ) { 
+		menuDisappearAnimation_5();
+	} else if ( !arrowAppearComplete_5) {
+		arrowAppearAnimation_5();
+	}
+}
